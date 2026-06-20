@@ -23,10 +23,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./client
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -39,14 +35,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build client
+      - name: Build project
         run: npm run build
 
       - name: Debug build output
         run: |
           pwd
           ls -la
-          find . -maxdepth 4 -name index.html -print
+          find . -maxdepth 5 -name index.html -print
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
@@ -54,7 +50,7 @@ jobs:
       - name: Upload build folder
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./client/dist
+          path: ./dist/client
 
       - name: Deploy to GitHub Pages
         id: deployment
