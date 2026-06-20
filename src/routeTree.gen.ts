@@ -11,6 +11,10 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PreviousTripsRouteImport } from './routes/previous-trips'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TripsNewRouteImport } from './routes/trips.new'
+import { Route as TripsIdResultRouteImport } from './routes/trips.$id.result'
+import { Route as TripsIdPlanRouteImport } from './routes/trips.$id.plan'
+import { Route as TripsIdLiveRouteImport } from './routes/trips.$id.live'
 
 const PreviousTripsRoute = PreviousTripsRouteImport.update({
   id: '/previous-trips',
@@ -22,31 +26,86 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TripsNewRoute = TripsNewRouteImport.update({
+  id: '/trips/new',
+  path: '/trips/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TripsIdResultRoute = TripsIdResultRouteImport.update({
+  id: '/trips/$id/result',
+  path: '/trips/$id/result',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TripsIdPlanRoute = TripsIdPlanRouteImport.update({
+  id: '/trips/$id/plan',
+  path: '/trips/$id/plan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TripsIdLiveRoute = TripsIdLiveRouteImport.update({
+  id: '/trips/$id/live',
+  path: '/trips/$id/live',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/previous-trips': typeof PreviousTripsRoute
+  '/trips/new': typeof TripsNewRoute
+  '/trips/$id/live': typeof TripsIdLiveRoute
+  '/trips/$id/plan': typeof TripsIdPlanRoute
+  '/trips/$id/result': typeof TripsIdResultRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/previous-trips': typeof PreviousTripsRoute
+  '/trips/new': typeof TripsNewRoute
+  '/trips/$id/live': typeof TripsIdLiveRoute
+  '/trips/$id/plan': typeof TripsIdPlanRoute
+  '/trips/$id/result': typeof TripsIdResultRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/previous-trips': typeof PreviousTripsRoute
+  '/trips/new': typeof TripsNewRoute
+  '/trips/$id/live': typeof TripsIdLiveRoute
+  '/trips/$id/plan': typeof TripsIdPlanRoute
+  '/trips/$id/result': typeof TripsIdResultRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/previous-trips'
+  fullPaths:
+    | '/'
+    | '/previous-trips'
+    | '/trips/new'
+    | '/trips/$id/live'
+    | '/trips/$id/plan'
+    | '/trips/$id/result'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/previous-trips'
-  id: '__root__' | '/' | '/previous-trips'
+  to:
+    | '/'
+    | '/previous-trips'
+    | '/trips/new'
+    | '/trips/$id/live'
+    | '/trips/$id/plan'
+    | '/trips/$id/result'
+  id:
+    | '__root__'
+    | '/'
+    | '/previous-trips'
+    | '/trips/new'
+    | '/trips/$id/live'
+    | '/trips/$id/plan'
+    | '/trips/$id/result'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PreviousTripsRoute: typeof PreviousTripsRoute
+  TripsNewRoute: typeof TripsNewRoute
+  TripsIdLiveRoute: typeof TripsIdLiveRoute
+  TripsIdPlanRoute: typeof TripsIdPlanRoute
+  TripsIdResultRoute: typeof TripsIdResultRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +124,44 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/trips/new': {
+      id: '/trips/new'
+      path: '/trips/new'
+      fullPath: '/trips/new'
+      preLoaderRoute: typeof TripsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trips/$id/result': {
+      id: '/trips/$id/result'
+      path: '/trips/$id/result'
+      fullPath: '/trips/$id/result'
+      preLoaderRoute: typeof TripsIdResultRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trips/$id/plan': {
+      id: '/trips/$id/plan'
+      path: '/trips/$id/plan'
+      fullPath: '/trips/$id/plan'
+      preLoaderRoute: typeof TripsIdPlanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/trips/$id/live': {
+      id: '/trips/$id/live'
+      path: '/trips/$id/live'
+      fullPath: '/trips/$id/live'
+      preLoaderRoute: typeof TripsIdLiveRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PreviousTripsRoute: PreviousTripsRoute,
+  TripsNewRoute: TripsNewRoute,
+  TripsIdLiveRoute: TripsIdLiveRoute,
+  TripsIdPlanRoute: TripsIdPlanRoute,
+  TripsIdResultRoute: TripsIdResultRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
