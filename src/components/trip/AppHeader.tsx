@@ -14,9 +14,11 @@ export function AppHeader() {
             <div className="text-[11px] text-muted-foreground -mt-0.5">Planner</div>
           </div>
         </Link>
+        <button className="rounded-xl bg-[image:var(--gradient-hero)] px-3 py-1 text-sm font-medium text-primary-foreground shadow-[var(--shadow-card)] transition-colors">
         <Link to="/previous-trips" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
           Previous Trips
         </Link>
+        </button>
       </div>
     </header>
   );

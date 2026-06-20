@@ -1,10 +1,10 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { ArrowLeft, ChevronLeft, ChevronRight, Check } from "lucide-react";
 import { AppHeader } from "@/components/trip/AppHeader";
-import { Field, TextInput, TextArea, PrimaryBtn, GhostBtn } from "@/components/trip/Field";
-import { MembersSection, TransportSection, StaySection, RentalsSection, ItinerarySection, ExpensesSection } from "@/components/trip/Sections";
-import { createBlankTrip, saveTrip, estimatedBudget, type Trip } from "@/lib/trips";
+import { Field, GhostBtn, PrimaryBtn, TextArea, TextInput } from "@/components/trip/Field";
+import { ExpensesSection, ItinerarySection, MembersSection, RentalsSection, StaySection, TransportSection } from "@/components/trip/Sections";
+import { createBlankTrip, estimatedBudget, saveTrip, type Trip } from "@/lib/trips";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { ArrowLeft, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { useMemo, useState } from "react";
 
 export const Route = createFileRoute("/trips/new")({
   head: () => ({ meta: [{ title: "New Trip — TripMate" }] }),
@@ -33,7 +33,7 @@ function NewTrip() {
         <div className="flex flex-wrap gap-1.5">
           {steps.map((s, i) => (
             <button key={s} onClick={() => setStep(i)}
-              className={`rounded-full px-3 py-1 text-xs font-medium transition ${i === step ? "bg-primary text-primary-foreground" : i < step ? "bg-[color:var(--success)] text-white" : "bg-secondary text-secondary-foreground"}`}>
+              className={`rounded-full cursor-pointer px-3 py-1 text-xs font-medium transition ${i === step ? "bg-primary text-primary-foreground" : i < step ? "bg-[color:var(--success)] text-white" : "bg-secondary text-secondary-foreground"}`}>
               {i + 1}. {s}
             </button>
           ))}
@@ -82,13 +82,13 @@ function NewTrip() {
         </div>
 
         <div className="flex justify-between gap-2">
-          <GhostBtn onClick={() => setStep(Math.max(0, step - 1))} disabled={step === 0}>
+          <GhostBtn className="cursor-pointer" onClick={() => setStep(Math.max(0, step - 1))} disabled={step === 0}>
             <ChevronLeft className="h-4 w-4" /> Back
           </GhostBtn>
           {step < steps.length - 1 ? (
-            <PrimaryBtn onClick={() => setStep(step + 1)}>Next <ChevronRight className="h-4 w-4" /></PrimaryBtn>
+            <PrimaryBtn className="cursor-pointer" onClick={() => setStep(step + 1)}>Next <ChevronRight className="h-4 w-4" /></PrimaryBtn>
           ) : (
-            <PrimaryBtn onClick={finish}><Check className="h-4 w-4" /> Save Trip</PrimaryBtn>
+            <PrimaryBtn className="cursor-pointer" onClick={finish}><Check className="h-4 w-4" /> Save Trip</PrimaryBtn>
           )}
         </div>
       </main>
