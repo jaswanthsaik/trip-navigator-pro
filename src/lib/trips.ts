@@ -43,14 +43,35 @@ export interface Trip {
 
 const KEY = "tripmate.trips.v1";
 const listeners = new Set<() => void>();
+let cache: Trip[] = [];
+let cacheLoaded = false;
 
-function read(): Trip[] {
+function loadFromStorage(): Trip[] {
   if (typeof window === "undefined") return [];
   try { return JSON.parse(localStorage.getItem(KEY) ?? "[]"); } catch { return []; }
 }
+function read(): Trip[] {
+  if (!cacheLoaded && typeof window !== "undefined") {
+    cache = loadFromStorage();
+    cacheLoaded = true;
+  }
+  return cache;
+}
 function write(trips: Trip[]) {
+  cache = trips;
+  cacheLoaded = true;
   localStorage.setItem(KEY, JSON.stringify(trips));
   listeners.forEach((l) => l());
+}
+
+if (typeof window !== "undefined") {
+  window.addEventListener("storage", (e) => {
+    if (e.key === KEY) {
+      cache = loadFromStorage();
+      cacheLoaded = true;
+      listeners.forEach((l) => l());
+    }
+  });
 }
 
 export const uid = () => Math.random().toString(36).slice(2, 10);
