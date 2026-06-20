@@ -45,6 +45,7 @@ const KEY = "tripmate.trips.v1";
 const listeners = new Set<() => void>();
 let cache: Trip[] = [];
 let cacheLoaded = false;
+const EMPTY: Trip[] = [];
 
 function loadFromStorage(): Trip[] {
   if (typeof window === "undefined") return [];
@@ -80,7 +81,7 @@ export function useTrips(): Trip[] {
   return useSyncExternalStore(
     (cb) => { listeners.add(cb); return () => listeners.delete(cb); },
     read,
-    () => [],
+    () => EMPTY,
   );
 }
 
